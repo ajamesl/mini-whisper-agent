@@ -1,0 +1,14 @@
+# Core ML dependencies
+torch>=1.9.0
+numpy>=1.21.0
+
+# Whisper and audio processing
+openai-whisper>=20230124
+sounddevice>=0.4.4
+
+# UI automation and input handling
+pyautogui>=0.9.54
+pynput>=1.7.6
+
+# Progress bars and utilities
+tqdm>=4.64.0
