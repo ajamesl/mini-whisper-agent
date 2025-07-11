@@ -60,11 +60,6 @@ pip install -r requirements.txt
 uv sync
 ```
 
-4. Ensure you have the required directories:
-```bash
-mkdir -p checkpoints voice_recordings
-```
-
 ## Usage
 
 ### Running the Voice Assistant
