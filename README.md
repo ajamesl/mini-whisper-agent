@@ -2,6 +2,10 @@
 
 > **A fun 24-hour project:** A voice-controlled assistant that uses OpenAI Whisper (tiny) for speech recognition to execute voice commands like Google searches and ChatGPT interactions.
 
+## Video Demo
+
+https://github.com/user-attachments/assets/35188d99-1010-46cd-9b02-1b8ed182f84f
+
 ## Features
 
 - **Voice Command Recognition**: Uses fine-tuned Whisper tiny model for accurate speech-to-text
