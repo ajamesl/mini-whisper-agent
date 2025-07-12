@@ -1,6 +1,6 @@
-# Mini Whisper Agent
+# 🤖 Mini Whisper Agent
 
-> 🚀 **A fun 24-hour project!** A voice-controlled assistant that uses OpenAI Whisper (tiny) for speech recognition to execute voice commands like Google searches and ChatGPT interactions.
+> **A fun 24-hour project:** A voice-controlled assistant that uses OpenAI Whisper (tiny) for speech recognition to execute voice commands like Google searches and ChatGPT interactions.
 
 ## Features
 
@@ -50,7 +50,7 @@ mini-whisper-agent/
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/ajamesl/mini-whisper-agent.git
 cd mini-whisper-agent
 git lfs pull  # Download the pre-trained model
 ```
