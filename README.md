@@ -12,7 +12,7 @@
 
 ## Supported Voice Commands
 
-The system currently recognises these command patterns:
+The system currently recognizes these command patterns:
 
 **Google Search Commands:**
 - "Search Google for [your query]"
@@ -30,13 +30,20 @@ The system currently recognises these command patterns:
 ```
 mini-whisper-agent/
 ├── app/
-│   └── app.py              # Main application with WhisperAgent class
+│   └── app.py                    # Main voice assistant application
 ├── finetune/
-│   ├── finetune.py         # Fine-tuning script
-├── checkpoints/            # Model checkpoints directory
-├── voice_recordings/       # Audio training data directory
-├── requirements.txt        # Python dependencies
-└── README.md              # This file
+│   └── finetune.py              # Model fine-tuning script
+├── checkpoints/
+│   └── whisper_tiny_finetuned.pt # Pre-trained model (via Git LFS)
+├── voice_recordings/            # Your training audio files
+│   └── tmp/                     # Temporary audio processing
+├── .gitattributes              # Git LFS configuration
+├── .gitignore                  # Git ignore rules
+├── LICENSE                     # MIT license
+├── README.md                   # This file
+├── pyproject.toml              # Project configuration
+├── requirements.txt            # Python dependencies
+└── uv.lock                     # UV dependency lock file
 ```
 
 ## Installation
@@ -45,6 +52,7 @@ mini-whisper-agent/
 ```bash
 git clone <repository-url>
 cd mini-whisper-agent
+git lfs pull  # Download the pre-trained model
 ```
 
 2. Install system dependencies:
@@ -60,27 +68,24 @@ pip install -r requirements.txt
 uv sync
 ```
 
-4. Ensure you have the required directories:
-```bash
-mkdir -p checkpoints voice_recordings
-```
-
 ## Usage
 
 ### Running the Voice Assistant
 
+🎯 **Want to try it immediately?** The repository includes a pre-trained model ready to use!
+
 ```bash
-cd app
-python app.py
+# Run from project root
+uv run app/app.py  # or python app/app.py
 ```
 
 - Hold **CTRL** to start recording your voice command
 - Release **CTRL** to stop recording and process the command
-- The system will automatically open your browser and execute the command
+- The system will automatically open your browser and execute the command if transcribed correctly
 
 **Browser Compatibility Notes:**
 - ✅ **Brave Browser**: Recommended - works seamlessly with all features
-- ⚠️ **Chrome**: May encounter verification issues when accessing ChatGPT
+- ⚠️ **Chrome**: May encounter issues (e.g., verification issues when accessing ChatGPT)
 - 🔧 **Other Browsers**: Not tested
 
 ### Fine-tuning the Model
@@ -93,30 +98,48 @@ python app.py
    - Save files as `audio_01.m4a`, `audio_02.m4a`, etc. in the `voice_recordings/` folder
    - Aim for 10+ recordings for best fine-tuning results
 
-2. **Update Ground Truth**: Edit the `get_ground_truths()` function in `finetune.py` to match your recorded phrases
+2. **Update Ground Truth**: Edit the `get_ground_truths()` function in `finetune/finetune.py` to match your recorded phrases
 
 3. **Run Fine-tuning**:
 ```bash
-cd finetune
-python finetune.py
+# Run from project root
+uv run finetune/finetune.py  # or python finetune/finetune.py
 ```
+
+The script will:
+- Compare your recordings with the base Whisper model
+- Identify mismatches that need correction
+- Fine-tune only on the mismatched samples
+- Save the improved model to `checkpoints/whisper_tiny_finetuned.pt`
 
 > 💡 **Tip**: The more diverse your training audio (different background noise, speaking speeds, etc.), the more robust your model will be!
 
 ## Configuration
 
-### Constants in `app.py`:
+### Constants in `app/app.py`:
 - `SAMPLE_RATE`: Audio sample rate (default: 16000)
 - `CHECKPOINT_PATH`: Path to fine-tuned model
 - `BROWSER_LOAD_DELAY`: Time to wait for browser to load
 - `TYPING_DELAY`: Delay between typing characters
 
-### Constants in `finetune_clean.py`:
+### Constants in `finetune/finetune.py`:
 - `MODEL_NAME`: Base Whisper model to fine-tune (default: "tiny")
 - `EPOCHS`: Number of training epochs
 - `LEARNING_RATE`: Training learning rate
 - `AUDIO_COUNT`: Number of audio files to process
 - `AUDIO_FORMAT`: Audio file format (e.g., ".m4a", ".wav")
+
+### Running Scripts
+
+Both scripts can be run from the project root directory:
+
+```bash
+# Voice assistant
+uv run app/app.py
+
+# Fine-tuning
+uv run finetune/finetune.py
+```
 
 ## Extending the System
 
