@@ -46,6 +46,11 @@ Thumbs.db
 # Project specific
 checkpoints/*.pt
 checkpoints/*.pth
+!checkpoints/whisper_tiny_finetuned.pt
+voice_recordings/*.m4a
+voice_recordings/*.wav
+voice_recordings/*.mp3
+fine_tune_logs.txt
 
 # Logs
 *.log

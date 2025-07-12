@@ -8,6 +8,7 @@ import re
 import time
 import webbrowser
 from pathlib import Path
+from typing import Optional, Any
 
 import numpy as np
 import pyautogui
@@ -33,7 +34,7 @@ TYPING_DELAY = 0.3
 CHATGPT_TYPING_DELAY = 0.5
 
 
-def execute_command(transcription):
+def execute_command(transcription: str) -> None:
     """Execute voice commands based on transcribed speech.
 
     Processes the transcribed text to identify and execute specific commands:
@@ -41,7 +42,7 @@ def execute_command(transcription):
     - ChatGPT commands: Opens ChatGPT and sends specified prompts
 
     Args:
-        transcription (str): The transcribed speech text to process.
+        transcription: The transcribed speech text to process.
     """
     text = transcription.lower().strip()
 
@@ -73,11 +74,11 @@ def execute_command(transcription):
 class WhisperAgent:
     """Voice command processor using OpenAI Whisper."""
     
-    def __init__(self, model_path: str = None):
+    def __init__(self, model_path: Optional[str] = None) -> None:
         """Initialize the Whisper agent.
         
         Args:
-            model_path (str, optional): Path to the fine-tuned model checkpoint.
+            model_path: Path to the fine-tuned model checkpoint.
         """
         self.model = whisper.load_model("tiny")
         
@@ -91,7 +92,7 @@ class WhisperAgent:
         self.recording = False
         self.stream = None
 
-    def callback(self, indata, frames, time, status):
+    def callback(self, indata: Any, frames: int, time: Any, status: Any) -> None:
         """Audio input callback for recording.
 
         Appends incoming audio data to the audio_data list when recording
@@ -106,7 +107,7 @@ class WhisperAgent:
         if self.recording:
             self.audio_data.append(indata.copy())
 
-    def on_press(self, key):
+    def on_press(self, key: Any) -> None:
         """Handle key press events for starting audio recording.
 
         Starts audio recording when the CTRL key is pressed and recording is not
@@ -130,7 +131,7 @@ class WhisperAgent:
         except Exception as e:
             print(f"Error: {e}")
 
-    def on_release(self, key):
+    def on_release(self, key: Any) -> bool:
         """Handle key release events for stopping audio recording.
 
         Stops audio recording when the CTRL key is released, processes the recorded
@@ -140,7 +141,7 @@ class WhisperAgent:
             key: The keyboard key that was released.
 
         Returns:
-            bool: False to end the listener after one recording cycle.
+            False to end the listener after one recording cycle.
         """
         if key == keyboard.Key.ctrl and self.recording:
             print("Stopped recording.")
@@ -154,7 +155,7 @@ class WhisperAgent:
             execute_command(result["text"])
             return False  # End listener after one recording
 
-    def run(self):
+    def run(self) -> None:
         """Start the voice command listener."""
         while True:
             print("Hold CTRL to record...")
@@ -166,7 +167,7 @@ class WhisperAgent:
             print()
 
 
-def main():
+def main() -> None:
     """Main entry point for the Whisper Agent."""
     agent = WhisperAgent(model_path=str(CHECKPOINT_PATH))
     agent.run()

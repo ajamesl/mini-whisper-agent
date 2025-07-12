@@ -8,14 +8,15 @@ import os
 import re
 import string
 from pathlib import Path
+from typing import Dict, List, Tuple, Any
 
 import torch
 import whisper
 from tqdm import tqdm
 
 # Constants
-RECORDINGS_DIR = Path("voice_recordings")
-CHECKPOINT_DIR = Path("checkpoints")
+RECORDINGS_DIR = Path(__file__).parent.parent / "voice_recordings"
+CHECKPOINT_DIR = Path(__file__).parent.parent / "checkpoints"
 MODEL_NAME = "tiny"
 EPOCHS = 2
 LEARNING_RATE = 1e-5
@@ -56,11 +57,11 @@ def clean_for_compare(text):
     return text.strip()
 
 
-def get_audio_files():
+def get_audio_files() -> List[Path]:
     """Get list of audio files to process.
     
     Returns:
-        list: List of absolute paths to audio files.
+        List[Path]: List of absolute paths to audio files.
     """
     audio_files = [
         f"audio_{i:02d}{AUDIO_FORMAT}" for i in range(1, AUDIO_COUNT + 1)
@@ -68,11 +69,11 @@ def get_audio_files():
     return [RECORDINGS_DIR / fname for fname in audio_files]
 
 
-def get_ground_truths():
+def get_ground_truths() -> List[str]:
     """Get ground truth transcriptions for audio files.
     
     Returns:
-        list: List of ground truth transcriptions.
+        List[str]: List of ground truth transcriptions.
     """
     return [
         "Ask chat GPT to tell us a joke",
@@ -88,16 +89,16 @@ def get_ground_truths():
     ]
 
 
-def find_mismatches(model, audio_files, ground_truths):
+def find_mismatches(model: Any, audio_files: List[Path], ground_truths: List[str]) -> List[Dict[str, str]]:
     """Find mismatches between Whisper predictions and ground truth.
     
     Args:
         model: Whisper model instance.
-        audio_files (list): List of audio file paths.
-        ground_truths (list): List of ground truth transcriptions.
+        audio_files: List of audio file paths.
+        ground_truths: List of ground truth transcriptions.
         
     Returns:
-        list: List of mismatch dictionaries.
+        List[Dict[str, str]]: List of mismatch dictionaries.
     """
     mismatches = []
 
@@ -128,16 +129,16 @@ def find_mismatches(model, audio_files, ground_truths):
     return mismatches
 
 
-def train_model(model, tokenizer, mismatches):
+def train_model(model: Any, tokenizer: Any, mismatches: List[Dict[str, str]]) -> Tuple[List[float], List[Dict[str, Any]], Any]:
     """Train the model on mismatched samples.
     
     Args:
         model: Whisper model instance.
         tokenizer: Whisper tokenizer instance.
-        mismatches (list): List of mismatch dictionaries.
+        mismatches: List of mismatch dictionaries.
         
     Returns:
-        tuple: (losses, outputs, optimizer) from training.
+        Tuple[List[float], List[Dict[str, Any]], Any]: (losses, outputs, optimizer) from training.
     """
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE)
     loss_fn = torch.nn.CrossEntropyLoss()
@@ -195,13 +196,13 @@ def train_model(model, tokenizer, mismatches):
     return losses, outputs, optimizer
 
 
-def save_model_and_logs(model, optimizer, outputs):
+def save_model_and_logs(model: Any, optimizer: Any, outputs: List[Dict[str, Any]]) -> None:
     """Save the trained model and training logs.
     
     Args:
         model: Trained Whisper model.
         optimizer: Model optimizer.
-        outputs (list): Training outputs and logs.
+        outputs: Training outputs and logs.
     """
     # Ensure checkpoint directory exists
     CHECKPOINT_DIR.mkdir(exist_ok=True)
@@ -227,7 +228,7 @@ def save_model_and_logs(model, optimizer, outputs):
             f.write("-" * 40 + "\n")
 
 
-def main():
+def main() -> None:
     """Main fine-tuning function."""
     print("Loading Whisper model...")
     model = whisper.load_model(MODEL_NAME)
