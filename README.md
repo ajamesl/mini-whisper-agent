@@ -12,7 +12,7 @@
 
 ## Supported Voice Commands
 
-The system currently recognizes these command patterns:
+The system currently recognises these command patterns:
 
 **Google Search Commands:**
 - "Search Google for [your query]"
@@ -159,7 +159,7 @@ The modular design makes it easy to add features like:
 
 ## Voice Commands
 
-The system recognizes these command patterns:
+The system recognises these command patterns:
 
 **Google Search Commands:**
 - "Search Google for [query]"
