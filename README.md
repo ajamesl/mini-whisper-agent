@@ -151,9 +151,9 @@ Want to add more voice commands? Here's how:
 4. **Fine-tune**: Re-run the fine-tuning process with your expanded dataset
 
 The modular design makes it easy to add features like:
-- Social media posting
-- Email sending  
-- Smart home control
+- Play/pause music
+- Volume control
+- Email sending
 - Calendar management
 - And much more!
 
@@ -168,7 +168,7 @@ The system recognises these command patterns:
 
 **ChatGPT Commands:**
 - "Ask ChatGPT to [prompt]"
-- "Ask chat GPT [prompt]"
+- "Ask ChatGPT [prompt]"
 
 *🎯 Pro tip: Speak clearly and naturally - the fine-tuned model adapts to your speaking style!*
 
