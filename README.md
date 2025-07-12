@@ -61,11 +61,11 @@ git lfs pull  # Download the pre-trained model
 sudo apt install ffmpeg
 ```
 
-3. Install Python dependencies:
+3. Install Python dependencie (uv recommended):
 ```bash
-pip install -r requirements.txt
-# OR if using uv:
 uv sync
+# OR if using pip:
+pip install -r requirements.txt
 ```
 
 ## Usage
