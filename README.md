@@ -8,9 +8,9 @@ https://github.com/user-attachments/assets/35188d99-1010-46cd-9b02-1b8ed182f84f
 
 ## Features
 
-- **Voice Command Recognition**: Uses fine-tuned Whisper tiny model for accurate speech-to-text
+- **Voice Command Recognition**: Uses fine-tuned Whisper tiny model for low-latency speech-to-text
 - **Google Search**: Voice commands like "Search Google for pizza places near me" 
-- **ChatGPT Integration**: Voice commands like "Ask ChatGPT to tell me a joke"
+- **ChatGPT Integration**: Voice commands like "Ask ChatGPT to explain backpropagation"
 - **Real-time Processing**: Hold CTRL to record, release to process and execute commands
 - **Browser Compatibility**: Works great with Brave browser (Chrome may encounter verification issues with ChatGPT)
 
@@ -36,18 +36,18 @@ mini-whisper-agent/
 ├── app/
 │   └── app.py                    # Main voice assistant application
 ├── finetune/
-│   └── finetune.py              # Model fine-tuning script
+│   └── finetune.py               # Model fine-tuning script
 ├── checkpoints/
 │   └── whisper_tiny_finetuned.pt # Pre-trained model (via Git LFS)
-├── voice_recordings/            # Your training audio files
-│   └── tmp/                     # Temporary audio processing
-├── .gitattributes              # Git LFS configuration
-├── .gitignore                  # Git ignore rules
-├── LICENSE                     # MIT license
-├── README.md                   # This file
-├── pyproject.toml              # Project configuration
-├── requirements.txt            # Python dependencies
-└── uv.lock                     # UV dependency lock file
+├── voice_recordings/             # Your training audio files
+│   └── tmp/                      # Temporary audio processing
+├── .gitattributes                # Git LFS configuration
+├── .gitignore                    # Git ignore rules
+├── LICENSE                       # MIT license
+├── README.md                     # This file
+├── pyproject.toml                # Project configuration
+├── requirements.txt              # Python dependencies
+└── uv.lock                       # UV dependency lock file
 ```
 
 ## Installation
@@ -68,6 +68,7 @@ sudo apt install ffmpeg
 3. Install Python dependencie (uv recommended):
 ```bash
 uv sync
+
 # OR if using pip:
 pip install -r requirements.txt
 ```
@@ -94,12 +95,13 @@ uv run app/app.py  # or python app/app.py
 
 ### Fine-tuning the Model
 
-🎤 **For best results, record your own audio clips!** This personalizes the model to your voice and environment.
+🎤 **For best results, record your own audio clips!** This personalises the model to your voice and environment.
 
 1. **Record Training Data**: 
    - Use your device microphone to record phrases like "Search Google for..." and "Ask ChatGPT to..."
    - Record in different environments (quiet room, with background noise, etc.) for robustness
    - Save files as `audio_01.m4a`, `audio_02.m4a`, etc. in the `voice_recordings/` folder
+   - Update the `AUDIO_COUNT` and `AUDIO_FORMAT` finetune/finetune.py script to match the number of your recordings
    - Aim for 10+ recordings for best fine-tuning results
 
 2. **Update Ground Truth**: Edit the `get_ground_truths()` function in `finetune/finetune.py` to match your recorded phrases
@@ -114,7 +116,7 @@ The script will:
 - Compare your recordings with the base Whisper model
 - Identify mismatches that need correction
 - Fine-tune only on the mismatched samples
-- Save the improved model to `checkpoints/whisper_tiny_finetuned.pt`
+- Save the improved model to `checkpoints/whisper_tiny_finetuned_new.pt`
 
 > 💡 **Tip**: The more diverse your training audio (different background noise, speaking speeds, etc.), the more robust your model will be!
 
@@ -131,7 +133,7 @@ The script will:
 - `EPOCHS`: Number of training epochs
 - `LEARNING_RATE`: Training learning rate
 - `AUDIO_COUNT`: Number of audio files to process
-- `AUDIO_FORMAT`: Audio file format (e.g., ".m4a", ".wav")
+- `AUDIO_FORMAT`: Audio file format (e.g., ".m4a", ".mp3", ".wav")
 
 ### Running Scripts
 
