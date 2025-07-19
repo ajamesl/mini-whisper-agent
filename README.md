@@ -1,6 +1,6 @@
 # 🤖 Mini Whisper Agent
 
-> **A fun 24-hour project:** A voice-controlled assistant that uses OpenAI Whisper (tiny) for speech recognition to execute voice commands like Google searches and ChatGPT interactions.
+> **A fun 24-hour project:** A voice-controlled assistant that uses OpenAI's Whisper (tiny) for speech recognition to execute voice commands like Google searches and ChatGPT interactions.
 
 ## Video Demo
 
